@@ -104,10 +104,14 @@ syntax match  bpftraceInclude   display "^\s*\zs\(%:\|#\)\s*include\>\s*["<]" co
 " From c.vim
 syntax region bpftraceDefine start="^\s*\zs\(%:\|#\)\s*\(define\|undef\)\>" skip="\\$" end="$" keepend contains=ALLBUT,@cPreProcGroup,@Spell
 
-syntax match bpftraceNumber "\v<\d+>"
-syntax match bpftraceNumber "\v<\d+\.\d+>"
-syntax match bpftraceNumber "\v<\d*\.?\d+([Ee]-?)?\d+>"
-syntax match bpftraceNumber "\v<0x\x+([Pp]-?)?\x+>"
+" Decimal number possibly containing underscores
+syntax match bpftraceNumber "\v<[1-9]((\d|_)*\d)?>"
+" Scientifc integer
+syntax match bpftraceNumber "\v<\d[eE]\d((\d|_)*\d)?>"
+" Octal number possibly containg underscores
+syntax match bpftraceNumber "\v<0(\o|_)*\o>"
+" Hex number
+syntax match bpftraceNumber "\v<0[xX]\x+>"
 
 " From c.vim
 syntax  match bpftraceFormat display "%\(\d\+\$\)\=[-+' #0*]*\(\d*\|\*\|\*\d\+\$\)\(\.\(\d*\|\*\|\*\d\+\$\)\)\=\([hlLjzt]\|ll\|hh\)\=\([aAbdiuoxXDOUfFeEgGcCsSpn]\|\[\^\=.[^]]*\]\)" contained
