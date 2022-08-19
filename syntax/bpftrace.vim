@@ -17,6 +17,11 @@ syntax keyword bpftraceConditionals
 
 syntax keyword bpftraceRepeats
       \ unroll
+      \ while
+
+syntax keyword bpftraceStatements
+      \ break
+      \ continue
 
 syntax match bpftracePositionalParameters "\$\v<\d+>"
 
@@ -27,6 +32,8 @@ syntax match bpftraceScratchVariables  "\$\v<\d*\h+\w+>"
 syntax keyword bpftraceKeywords
       \ pid
       \ tid
+      \ cpid
+      \ numaid
       \ cgroup
       \ uid
       \ gid
@@ -43,6 +50,16 @@ syntax keyword bpftraceKeywords
       \ arg7
       \ arg8
       \ arg9
+      \ sarg0
+      \ sarg1
+      \ sarg2
+      \ sarg3
+      \ sarg4
+      \ sarg5
+      \ sarg6
+      \ sarg7
+      \ sarg8
+      \ sarg9
       \ retval
       \ func
       \ probe
@@ -54,6 +71,8 @@ syntax keyword bpftraceKeywords
       \ elapsed
 
 syntax keyword bpftraceBuiltinFunctions
+      \ bswap
+      \ buf
       \ kstack
       \ ustack
       \ hist
@@ -69,10 +88,14 @@ syntax keyword bpftraceBuiltinFunctions
       \ ksym
       \ usym
       \ ntop
+      \ pton
       \ join
       \ reg
       \ kaddr
       \ uaddr
+      \ kptr
+      \ uptr
+      \ cgroup_path
       \ cgroupid
       \ print
       \ printf
@@ -82,6 +105,15 @@ syntax keyword bpftraceBuiltinFunctions
       \ zero
       \ time
       \ cat
+      \ macaddr
+      \ override
+      \ signal
+      \ sizeof
+      \ strftime
+      \ strncmp
+      \ path
+      \ unwatch
+      \ skboutput
 
 syntax keyword bpftraceProbeType
       \ BEGIN
@@ -95,6 +127,12 @@ syntax keyword bpftraceProbeType
       \ software
       \ interval
       \ profile
+      \ iter
+      \ kfunc
+      \ kretfunc
+      \ usdt
+      \ watchpoint
+      \ asyncwatchpoint
 
 " From c.vim
 syntax region bpftraceIncluded display contained start=+"+ skip=+\\\\\|\\"+ end=+"+
@@ -104,10 +142,12 @@ syntax match  bpftraceInclude   display "^\s*\zs\(%:\|#\)\s*include\>\s*["<]" co
 " From c.vim
 syntax region bpftraceDefine start="^\s*\zs\(%:\|#\)\s*\(define\|undef\)\>" skip="\\$" end="$" keepend contains=ALLBUT,@cPreProcGroup,@Spell
 
-syntax match bpftraceNumber "\v<\d+>"
-syntax match bpftraceNumber "\v<\d+\.\d+>"
-syntax match bpftraceNumber "\v<\d*\.?\d+([Ee]-?)?\d+>"
-syntax match bpftraceNumber "\v<0x\x+([Pp]-?)?\x+>"
+" Decimal or octal number possibly containing underscores
+syntax match bpftraceNumber "\v<\d((\d|_)*\d)?>"
+" Scientifc integer
+syntax match bpftraceNumber "\v<\d[eE]\d((\d|_)*\d)?>"
+" Hex number
+syntax match bpftraceNumber "\v<0[xX]\x+>"
 
 " From c.vim
 syntax  match bpftraceFormat display "%\(\d\+\$\)\=[-+' #0*]*\(\d*\|\*\|\*\d\+\$\)\(\.\(\d*\|\*\|\*\d\+\$\)\)\=\([hlLjzt]\|ll\|hh\)\=\([aAbdiuoxXDOUfFeEgGcCsSpn]\|\[\^\=.[^]]*\]\)" contained
@@ -123,6 +163,7 @@ highlight default link bpftraceComment Comment
 highlight default link bpftraceString String
 highlight default link bpftraceNumber Number
 
+highlight default link bpftraceStatements Statement
 highlight default link bpftraceConditionals Conditional
 highlight default link bpftraceRepeats Repeat
 highlight default link bpftraceKeywords Keyword
