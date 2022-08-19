@@ -142,12 +142,10 @@ syntax match  bpftraceInclude   display "^\s*\zs\(%:\|#\)\s*include\>\s*["<]" co
 " From c.vim
 syntax region bpftraceDefine start="^\s*\zs\(%:\|#\)\s*\(define\|undef\)\>" skip="\\$" end="$" keepend contains=ALLBUT,@cPreProcGroup,@Spell
 
-" Decimal number possibly containing underscores
-syntax match bpftraceNumber "\v<[1-9]((\d|_)*\d)?>"
+" Decimal or octal number possibly containing underscores
+syntax match bpftraceNumber "\v<\d((\d|_)*\d)?>"
 " Scientifc integer
 syntax match bpftraceNumber "\v<\d[eE]\d((\d|_)*\d)?>"
-" Octal number possibly containg underscores
-syntax match bpftraceNumber "\v<0(\o|_)*\o>"
 " Hex number
 syntax match bpftraceNumber "\v<0[xX]\x+>"
 
